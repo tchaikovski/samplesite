@@ -5,8 +5,11 @@
 {% block content %}
     <h2>Рубрика: {{ current_rubric.name }}</h2>
     {% for bb in bbs %}
-        <div>
+{#        {% cycle 'b1' 'b2' as curentclass %} {{ curentclass }}#}
+        <div class="{% cycle 'b1' 'b2' %}">
             <h2><a href="{% url 'detail' pk=bb.pk %}">{{ bb.title }}</a></h2>
+                    <p>№{{ forloop.counter }}</p>
+{#{% firstof bb.phone bb.email 'На деревню дедушке' %}  текст если переменные пустые#}
             <p>{{ bb.content }}</p>
             <p>{{ bb.published|date:"d.m.Y H:i:s" }}</p>
         </div>

@@ -1,0 +1,18 @@
+{% extends "layout/basic.html" %}
+{% load static %}
+
+
+{% block content %}
+
+
+    {% for bb in bb_list %}
+                    <h2><a href="{% url 'detail' pk=bb.pk %}">{{ bb.title }}</a></h2>
+
+
+   <p>     {{ bb.content }}</p>
+      <p>  {{ bb.price }} руб.</p>
+
+        <p>{{ bb.created_at }}</p>
+
+    {% endfor %}
+{% endblock %}

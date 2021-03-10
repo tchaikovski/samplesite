@@ -1,11 +1,41 @@
 {% extends 'layout/basic.html' %}
 {% block content %}
+    {% with bb_count=bbs.count %}
+        {% if bb_count > 0 %}
+            <p>Всего {{ bb_count }} объявлений.</p>
+        {% endif %}
+    {% endwith %}
+    {#{% debug %}#}
     {% for bb in bbs %}
+
         <div>
             <h2><a href="{% url 'detail' pk=bb.pk %}">{{ bb.title }}</a></h2>
-        <p>{{ bb.content }}</p>
-        <p><a href="{% url 'by_rubric' bb.rubric.pk %}">{{ bb.rubric.name }}</a> </p>
-        <p>{{ bb.published|date:"d.m.Y H:i:s" }}</p>
+            <p>№{{ forloop.counter }}</p>
+            <p>{{ bb.content }}</p>
+            <p><a href="{% url 'by_rubric' bb.rubric.pk %}">{{ bb.rubric.name }}</a></p>
+            <p>{{ bb.published|date:"d.m.Y H:i:s" }}</p>
+            <a href="{% url 'edit' pk=bb.pk %}">Изменить: {{ bb.title }}</a>
+            <a href="{% url 'delete' pk=bb.pk %}">Удалить: {{ bb.title }}</a>
+            {% for d in date_list %}
+                {{ d.day }}
+                {{ d.month }}
+                {{ d.year }}
+
+            {% endfor %}
         </div>
     {% endfor %}
+
+    {#paginator#}
+    <div>
+        {% if page.has_previous %}
+            <a href="?page={{ page.previous_page_number }}">&lt;</a>
+        {% endif %}
+        {{ page.number }} if {{ page.paginator.num_pages }}
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}">&gt;</a>
+        {% endif %}
+
+
+    </div>
+    {#paginator#}
 {% endblock %}
